@@ -18,11 +18,18 @@ const int valvePin = 25;
 const int ldrPins[2] = {33, 32};
 const int capacitiveSensor = 35;
 
+//  Arrays de armazenamento
+float measuresDHT[3] = {0};
+int measuresLDR[3] = {0};
+int measuresSoil[3] = {0};
+
+//  Flags
+bool threeMeasures = 0;
+
 //---------------------------------------------------------------------------------
 // Setup:
 void setup()
 {
-
   Serial.begin(921600);
 }
 

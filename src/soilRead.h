@@ -1,7 +1,7 @@
 #ifndef soilRead_h
 #define soilRead_h
 
-void setupSensor();
-void readSensor();
+void setupSOIL(const int pin);
+void readSOIL(const int pin);
 
 #endif

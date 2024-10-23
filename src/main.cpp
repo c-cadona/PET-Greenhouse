@@ -22,7 +22,7 @@ extern const int valvePin = 25;
 
 //  Analog Pin's
 extern const int ldrPins[2] = {33, 32};
-extern const int capacitiveSensor = 35;
+extern const int soilPin = 35;
 
 //  Objects define
 #define DHT_TYPE DHT11
@@ -49,6 +49,7 @@ void setup()
   Serial.begin(921600);
 
   setupLDR(ldrPins);
+  setupSOIL(soilPin);
 }
 
 //---------------------------------------------------------------------------------

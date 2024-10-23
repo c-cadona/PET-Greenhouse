@@ -45,7 +45,6 @@ bool threeMeasures = 0;
 // Setup:
 void setup()
 {
-
   Serial.begin(921600);
 
   setupLDR(ldrPins);

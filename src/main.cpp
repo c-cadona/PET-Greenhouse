@@ -24,9 +24,8 @@ extern const int valvePin = 25;
 extern const int ldrPins[2] = {33, 32};
 extern const int soilPin = 35;
 
-//  Objects define
-#define DHT_TYPE DHT11
-DHT dht(dhtPin, DHT_TYPE);
+//  DHTs object
+extern DHT dht;
 
 //  Arrays de armazenamento
 float measuresDHT[3] = {0};

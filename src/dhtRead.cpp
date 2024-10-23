@@ -12,6 +12,7 @@ void setupDHT()
     dht.begin();
 }
 
+//  Função que lê a temperatura pelo DHT
 float readDHT()
 {
     return dht.readTemperature();

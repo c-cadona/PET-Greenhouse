@@ -1,5 +1,6 @@
 //  Pages includes
 #include <Arduino.h>
+#include <DHT.h>
 #include "dhtRead.h"
 #include "ldrRead.h"
 #include "soilRead.h"
@@ -23,10 +24,19 @@ const int valvePin = 25;
 const int ldrPins[2] = {33, 32};
 const int capacitiveSensor = 35;
 
+//  Objects define
+#define DHT_TYPE DHT11
+DHT dht(dhtPins, DHT_TYPE);
+
 //  Arrays de armazenamento
 float measuresDHT[3] = {0};
 int measuresLDR[3] = {0};
-int measuresSoil[3] = {0};
+int measuresSOIL[3] = {0};
+
+//  Variáveis de armazenamento
+float averageDHT = 0;
+int averageLDR = 0;
+int averageSOIL = 0;
 
 //  Flags
 bool threeMeasures = 0;

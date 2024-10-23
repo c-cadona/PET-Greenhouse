@@ -1,10 +1,15 @@
 //  Pages includes
 #include <Arduino.h>
 #include <DHT.h>
+#include <Wire.h>
+#include <RTClib.h>
+#include <WiFi.h>
+#include <time.h>
 #include "dhtRead.h"
 #include "ldrRead.h"
 #include "soilRead.h"
 #include "relays.h"
+#include "rtc.h"
 
 // CONSTANTS
 const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
@@ -24,8 +29,9 @@ extern const int valvePin = 25;
 extern const int ldrPins[2] = {33, 32};
 extern const int soilPin = 35;
 
-//  DHTs object
+//  External objects
 extern DHT dht;
+extern RTC_DS1307 rtc;
 
 //  Arrays de armazenamento
 float measuresDHT[3] = {0};
@@ -46,6 +52,7 @@ void setup()
 {
   Serial.begin(921600);
 
+  setupRTC();
   setupLDR(ldrPins);
   setupSOIL(soilPin);
   setupDHT();

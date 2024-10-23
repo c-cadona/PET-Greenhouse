@@ -51,6 +51,7 @@ void setup()
   setupLDR(ldrPins);
   setupSOIL(soilPin);
   setupDHT();
+  setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
 }
 
 //---------------------------------------------------------------------------------

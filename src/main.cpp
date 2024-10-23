@@ -1,4 +1,9 @@
+//  Pages includes
 #include <Arduino.h>
+#include "dhtRead.h"
+#include "ldrRead.h"
+#include "soilRead.h"
+#include "relays.h"
 
 // CONSTANTS
 const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo

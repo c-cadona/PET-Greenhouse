@@ -50,6 +50,7 @@ void setup()
 
   setupLDR(ldrPins);
   setupSOIL(soilPin);
+  setupDHT();
 }
 
 //---------------------------------------------------------------------------------

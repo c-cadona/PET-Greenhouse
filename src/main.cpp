@@ -13,11 +13,11 @@
 #include "general.h"
 
 // CONSTANTS
-const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
-const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
-const int ENOUGH_LIGHT = 150; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
-const int DRY = 700;          // Valor lido quando o solo está totalmente seco
-const int WET = 370;          // Valor lido quando o solo está submerso na água
+extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
+extern const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
+extern const int ENOUGH_LIGHT = 150; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
+extern const int DRY = 700;          // Valor lido quando o solo está totalmente seco
+extern const int WET = 370;          // Valor lido quando o solo está submerso na água
 
 //  Digital Pin's
 extern const int hotLightPin = 12;

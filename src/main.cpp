@@ -64,4 +64,5 @@ void setup()
 // Loop:
 void loop()
 {
+  DateTime now = rtc.now();
 }

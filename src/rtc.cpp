@@ -9,6 +9,13 @@ RTC_DS1307 rtc;
 //  Inicializando o RTC
 void setupRTC()
 {
+    if (!rtc.begin())
+    {
+        Serial.println("RTC não encontrado!");
+        while (true)
+            ; // Se o RTC não for encontrado, trava o código
+    }
+
     DateTime now = rtc.now();
     Serial.println("Horario atual: ");
     Serial.print(now.hour());

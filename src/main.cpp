@@ -63,5 +63,4 @@ void setup()
 // Loop:
 void loop()
 {
-  delay(1000);
 }

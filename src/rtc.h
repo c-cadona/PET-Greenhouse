@@ -2,5 +2,6 @@
 #define rtc_h
 
 void setupRTC();
+bool isDayTime();
 
 #endif

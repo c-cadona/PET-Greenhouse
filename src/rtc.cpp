@@ -6,6 +6,7 @@
 //  Object define
 RTC_DS1307 rtc;
 
+//  Inicializando o RTC
 void setupRTC()
 {
     DateTime now = rtc.now();
@@ -15,4 +16,11 @@ void setupRTC()
     Serial.print(now.minute());
     Serial.print(": ");
     Serial.print(now.second());
+}
+
+//  Função para conferir se é dia - para controle da luz fria.
+bool isDayTime()
+{
+    DateTime now = rtc.now();
+    return (now.hour() >= 6 && now.hour() < 18);
 }

@@ -10,6 +10,7 @@
 #include "soilRead.h"
 #include "relays.h"
 #include "rtc.h"
+#include "general.h"
 
 // CONSTANTS
 const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo

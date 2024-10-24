@@ -2,6 +2,6 @@
 #define soilRead_h
 
 void setupSOIL(const int pin);
-void readSOIL(const int pin);
+int readSOIL(const int pin);
 
 #endif

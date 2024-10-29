@@ -77,6 +77,11 @@ void loop()
   Serial.print("Média DHT: ");
   Serial.println(averageDHT);
 
+  float readSensor_SOIL = readSOIL(soilPin);
+  averageSOIL = movAverage(measuresSOIL, readSensor_SOIL);
+  Serial.print("Média SOIL: ");
+  Serial.println(averageSOIL);
+
   Serial.println();
 
   delay(5000);

@@ -52,8 +52,9 @@ bool threeMeasures = false;
 void setup()
 {
   Serial.begin(921600);
+  Wire.begin();
 
-  // setupRTC();
+  setupRTC();
   setupLDR(ldrPins);
   setupSOIL(soilPin);
   setupDHT();
@@ -79,7 +80,7 @@ void loop()
   float readSensor_SOIL = readSOIL(soilPin);
   averageSOIL = movAverage(measuresSOIL, readSensor_SOIL);
   Serial.print("Média SOIL: ");
- // Serial.println(averageSOIL);
+  Serial.println(averageSOIL);
 
   Serial.println();
 

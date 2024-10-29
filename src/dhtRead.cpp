@@ -23,15 +23,3 @@ float readDHT()
     }
     return temp;
 }
-
-//  Função para ler se está quente
-bool isHot(const int average, const int max)
-{
-    return average > max;
-}
-
-//  Função para ler se está quente
-bool isCold(const int average, const int min)
-{
-    return average < min;
-}

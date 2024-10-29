@@ -33,6 +33,7 @@ extern const int soilPin = 35;
 //  External objects
 extern DHT dht;
 extern RTC_DS1307 rtc;
+DateTime previousTime;
 
 //  Arrays de armazenamento
 float measuresDHT[10] = {0};
@@ -54,11 +55,11 @@ void setup()
   Serial.begin(921600);
   Wire.begin();
 
-  setupRTC();
-  setupLDR(ldrPins);
-  setupSOIL(soilPin);
-  setupDHT();
-  setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
+  setupRTC();                                              //  Inicializa o RTC
+  setupLDR(ldrPins);                                       //  Inicializa os LDRs
+  setupSOIL(soilPin);                                      //  Inicializa o Sensor Capacitivo
+  setupDHT();                                              //  Inicializa o DHT
+  setupRelays(valvePin, fanPin, ledLightPin, hotLightPin); //  Inicializa os relés
 }
 
 //---------------------------------------------------------------------------------
@@ -67,15 +68,19 @@ void loop()
 {
   DateTime now = rtc.now();
 
-  float readSensor_LDR = readLDR(ldrPins);
-  averageLDR = movAverage(measuresLDR, readSensor_LDR);
-  Serial.print("Média LDR: ");
-  Serial.println(averageLDR);
+  if (isDayTime())
+  {
+    float readSensor_LDR = readLDR(ldrPins);
+    averageLDR = movAverage(measuresLDR, readSensor_LDR);
+    Serial.print("Média LDR: ");
+    Serial.println(averageLDR);
+  }
 
   float readSensor_DHT = readDHT();
   averageDHT = movAverage(measuresDHT, readSensor_DHT);
   Serial.print("Média DHT: ");
   Serial.println(averageDHT);
+  tempControl(fanPin, hotLightPin, averageDHT, MAX_TEMP, MIN_TEMP);
 
   float readSensor_SOIL = readSOIL(soilPin);
   averageSOIL = movAverage(measuresSOIL, readSensor_SOIL);

@@ -15,11 +15,18 @@ void setupDHT()
 //  Função que lê a temperatura pelo DHT
 float readDHT()
 {
-    return dht.readTemperature();
+    float temp = dht.readTemperature();
+    if (isnan(temp))
+    {
+        Serial.println("Erro ao ler o DHT!");
+        return -1;
+    }
+    return temp;
 }
 
 //  Função para ler se está quente
-bool isHot(const int average, const int max){
+bool isHot(const int average, const int max)
+{
     return average > max;
 }
 

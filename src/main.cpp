@@ -13,9 +13,10 @@
 #include "general.h"
 
 // CONSTANTS
+extern const int SIZE = 3;           // Valor "tamanho" para calcular a média móvel de cada sensor
 extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
 extern const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
-extern const int ENOUGH_LIGHT = 150; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
+extern const int ENOUGH_LIGHT = 400; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
 extern const int DRY = 700;          // Valor lido quando o solo está totalmente seco
 extern const int WET = 370;          // Valor lido quando o solo está submerso na água
 
@@ -36,16 +37,16 @@ extern RTC_DS1307 rtc;
 
 //  Arrays de armazenamento
 float measuresDHT[3] = {0};
-int measuresLDR[3] = {0};
-int measuresSOIL[3] = {0};
+float measuresLDR[3] = {0};
+float measuresSOIL[3] = {0};
 
 //  Variáveis de armazenamento
 float averageDHT = 0;
-int averageLDR = 0;
-int averageSOIL = 0;
+float averageLDR = 0;
+float averageSOIL = 0;
 
 //  Flags
-bool threeMeasures = 0;
+bool threeMeasures = false;
 
 //---------------------------------------------------------------------------------
 // Setup:
@@ -53,7 +54,7 @@ void setup()
 {
   Serial.begin(921600);
 
-  setupRTC();
+  // setupRTC();
   setupLDR(ldrPins);
   setupSOIL(soilPin);
   setupDHT();
@@ -65,4 +66,16 @@ void setup()
 void loop()
 {
   DateTime now = rtc.now();
+
+  float readSensor_LDR = readLDR(ldrPins);
+  averageLDR = movAverage(measuresLDR, readSensor_LDR);
+  Serial.print("Média LDR: ");
+  Serial.println(averageLDR);
+
+  float readSensor_DHT = readDHT();
+  averageDHT = movAverage(measuresDHT, readSensor_DHT);
+  Serial.print("Média DHT: ");
+  Serial.println(averageDHT);
+
+  delay(1000);
 }

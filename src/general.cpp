@@ -14,41 +14,22 @@ float simpleAvg(float values[], int size)
 float movAverage(float values[], float measure)
 {
     // Inicializa os valores se estiverem em zero
-    if (values[0] == 0)
+    for (int i = 0; i < 10; i++)
     {
-        values[0] = measure;
-        return values[0];
-    }
-    else if (values[1] == 0)
-    {
-        values[1] = measure;
-        return simpleAvg(values, 2); // Média dos dois primeiros valores
-    }
-    else if (values[2] == 0)
-    {
-        values[2] = measure;
-        return simpleAvg(values, 3); // Média dos três primeiros valores
-    }
-    else if (values[3] == 0)
-    {
-        values[3] = measure;
-        return simpleAvg(values, 4); // Média dos quatro primeiros valores
-    }
-    else if (values[4] == 0)
-    {
-        values[4] = measure;
-        return simpleAvg(values, 5); // Média dos cinco primeiros valores
-    }
-    else
-    {
-        // Move os valores para criar espaço para o novo valor
-        for (int i = 0; i < 4; i++)
+        if (values[i] == 0)
         {
-            values[i] = values[i + 1];
+            values[i] = measure;
+            return simpleAvg(values, i + 1); // Calcula a média dos valores disponíveis
         }
-        values[4] = measure;
-
-        // Retorna a média dos 5 valores
-        return simpleAvg(values, 5);
     }
+
+    // Quando o array estiver cheio, mova todos os valores
+    for (int i = 0; i < 10; i++)
+    {
+        values[i] = values[i + 1];
+    }
+    values[9] = measure;
+
+    // Retorna a média dos 10 valores
+    return simpleAvg(values, 10);
 }

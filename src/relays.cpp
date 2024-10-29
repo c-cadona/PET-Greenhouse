@@ -76,6 +76,23 @@ void tempControl(const int fan, const int hotLight, float averageDHT, const floa
     {
         fanOFF(fan);
         hotLightON(hotLight);
-        Serial.println("Fan OFF - Hot Light ON");
+        Serial.println("Fan OFF - Hot Light OFF");
+    }
+}
+
+void humControl(const int valve, float averageSOIL, const float min)
+{
+    if (averageSOIL > min)
+    {
+        valveOFF(valve);
+        Serial.println("Valve OFF");
+    }
+    else if (averageSOIL < min)
+    {
+        valveON(valve);
+        Serial.println("Valve ON");
+        delay(5000);
+        valveOFF(valve);
+        Serial.println("Valve OFF");
     }
 }

@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "relays.h"
 #include "dhtRead.h"
+#include "rtc.h"
 
 //  Função que inicia os relés
 void setupRelays(const int valve, const int fan, const int ledLight, const int hotLight)
@@ -77,5 +78,17 @@ void tempControl(const int hotLight, const int fan, const float average, const f
         fanOFF(fan);
         hotLightOFF(hotLight);
         Serial.println("Fan OFF - Hot Light OFF");
+    }
+}
+
+void humControl(const int valve, const int average, const int max)
+{
+    if (average < max)
+    {
+        valveON(valve);
+        Serial.println("Válvula ligada");
+        rtcDelay(4);
+        valveOFF(valve);
+        Serial.println("Válvula desligada");
     }
 }

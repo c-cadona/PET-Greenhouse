@@ -88,6 +88,7 @@ void loop()
   averageSOIL = movAverage(measuresSOIL, readSensor_SOIL);
   Serial.print("Média SOIL: ");
   Serial.println(averageSOIL);
+  humControl(valvePin, averageSOIL, HUMIDITY);
 
   Serial.println();
 

@@ -28,7 +28,7 @@ void setupRTC()
     Serial.print(": ");
     Serial.print(now.minute());
     Serial.print(": ");
-    Serial.print(now.second());
+    Serial.println(now.second());
 }
 
 //  Função para conferir se é dia - para controle da luz fria.

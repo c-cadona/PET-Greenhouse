@@ -34,7 +34,6 @@ extern const int soilPin = 35;
 //  External objects
 extern DHT dht;
 extern RTC_DS1307 rtc;
-// extern LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 //  Arrays de armazenamento
 float measuresDHT[10] = {0};
@@ -45,9 +44,6 @@ float measuresSOIL[10] = {0};
 float averageDHT = 0;
 float averageLDR = 0;
 float averageSOIL = 0;
-
-//  Flags
-bool threeMeasures = false;
 
 //---------------------------------------------------------------------------------
 // Setup:
@@ -61,7 +57,6 @@ void setup()
   setupSOIL(soilPin);
   setupDHT();
   setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
-  // setupLCD();
 }
 
 //---------------------------------------------------------------------------------

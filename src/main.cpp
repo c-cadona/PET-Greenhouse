@@ -67,6 +67,8 @@ void loop()
 {
   DateTime now = rtc.now();
 
+  Serial.println(now.timestamp());
+
   float readSensor_LDR = readLDR(ldrPins);
   averageLDR = movAverage(measuresLDR, readSensor_LDR);
   Serial.print("Média LDR: ");

@@ -13,12 +13,12 @@
 #include "general.h"
 
 // CONSTANTS
-extern const float MAX_TEMP = 22.0;     // Valor a ser definido pelo botão externo
-extern const float MIN_TEMP = 18.0;     // Valor a ser definido pelo botão externo
-extern const int ENOUGH_LIGHT = 600;    // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
-extern const int DRY = 700;             // Valor lido quando o solo está totalmente seco
-extern const int WET = 370;             // Valor lido quando o solo está submerso na água
-extern const int HUMIDITY = 0.75 * DRY; // Valor fixo para controlar a humidade
+extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
+extern const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
+extern const int ENOUGH_LIGHT = 600; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
+extern const int DRY = 700;          // Valor lido quando o solo está totalmente seco
+extern const int WET = 370;          // Valor lido quando o solo está submerso na água
+extern const int HUMIDITY = 0.75 * DRY;
 
 //  Digital Pin's
 extern const int hotLightPin = 12;
@@ -46,6 +46,9 @@ float averageDHT = 0;
 float averageLDR = 0;
 float averageSOIL = 0;
 
+//  Flags
+bool threeMeasures = false;
+
 //---------------------------------------------------------------------------------
 // Setup:
 void setup()
@@ -66,7 +69,6 @@ void setup()
 void loop()
 {
   DateTime now = rtc.now();
-  //  Imprime hora atual
   Serial.println(now.timestamp());
 
   float readSensor_LDR = readLDR(ldrPins);

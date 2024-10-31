@@ -57,12 +57,12 @@ void setup()
   Serial.begin(921600);
   Wire.begin();
 
-  // setupRTC();
+  setupRTC();
   setupLDR(ldrPins);
   setupSOIL(soilPin);
   setupDHT();
   setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
-  setupLCD();
+  // setupLCD();
 }
 
 //---------------------------------------------------------------------------------
@@ -70,6 +70,7 @@ void setup()
 void loop()
 {
   DateTime now = rtc.now();
+  Serial.println(now.timestamp());
 
   float readSensor_LDR = readLDR(ldrPins);
   averageLDR = movAverage(measuresLDR, readSensor_LDR);

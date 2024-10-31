@@ -57,3 +57,25 @@ void valveOFF(const int valve)
 {
     digitalWrite(valve, HIGH);
 }
+
+void tempControl(const int hotLight, const int fan, const float average, const float max, const float min)
+{
+    if (average > max)
+    {
+        fanON(fan);
+        hotLightOFF(hotLight);
+        Serial.println("Fan ON - Hot Light OFF");
+    }
+    else if (average < min)
+    {
+        fanOFF(fan);
+        hotLightON(hotLight);
+        Serial.println("Fan OFF - Hot Light ON");
+    }
+    else
+    {
+        fanOFF(fan);
+        hotLightOFF(hotLight);
+        Serial.println("Fan OFF - Hot Light OFF");
+    }
+}

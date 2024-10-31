@@ -84,5 +84,7 @@ void loop()
 
   Serial.println();
 
-  delay(5000);
+  rtcDelay(5);
+
+  // delay(5000);
 }

@@ -37,3 +37,20 @@ bool isDayTime()
     DateTime now = rtc.now();
     return (now.hour() >= 6 && now.hour() < 18);
 }
+
+void rtcDelay(unsigned long intervalSeconds)
+{
+    DateTime startTime = rtc.now(); // Armazena o tempo de início
+
+    while (true)
+    {
+        DateTime currentTime = rtc.now();               // Tempo atual do RTC
+        TimeSpan elapsedTime = currentTime - startTime; // Calcula o tempo decorrido
+
+        // Sai do loop quando o tempo decorrido é igual ou maior ao intervalo desejado
+        if (elapsedTime.totalseconds() >= intervalSeconds)
+        {
+            break;
+        }
+    }
+}

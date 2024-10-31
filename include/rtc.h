@@ -3,5 +3,6 @@
 
 void setupRTC();
 bool isDayTime();
+void rtcDelay(unsigned long intervalSeconds);
 
 #endif

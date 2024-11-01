@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "relays.h"
 #include "dhtRead.h"
+#include "rtc.h"
 
 //  Função que inicia os relés
 void setupRelays(const int valve, const int fan, const int ledLight, const int hotLight)
@@ -58,40 +59,36 @@ void valveOFF(const int valve)
     digitalWrite(valve, HIGH);
 }
 
-void tempControl(const int fan, const int hotLight, float averageDHT, const float max, const float min)
+void tempControl(const int hotLight, const int fan, const float average, const float max, const float min)
 {
-    if (averageDHT < max && averageDHT > min)
-    {
-        fanOFF(fan);
-        hotLightOFF(hotLight);
-        Serial.println("Fan OFF - Hot Light OFF");
-    }
-    else if (averageDHT > max)
+    if (average > max)
     {
         fanON(fan);
         hotLightOFF(hotLight);
         Serial.println("Fan ON - Hot Light OFF");
     }
-    else if (averageDHT < min)
+
+    else if (average < min)
     {
         fanOFF(fan);
         hotLightON(hotLight);
+        Serial.println("Fan OFF - Hot Light ON");
+    }
+    else
+    {
+        fanOFF(fan);
+        hotLightOFF(hotLight);
         Serial.println("Fan OFF - Hot Light OFF");
     }
 }
 
-void humControl(const int valve, float averageSOIL, const float min)
+void humControl(const int valve, const float average, const float max)
 {
-    if (averageSOIL > min)
-    {
-        valveOFF(valve);
-        Serial.println("Valve OFF");
-    }
-    else if (averageSOIL < min)
+    if (average < max)
     {
         valveON(valve);
         Serial.println("Valve ON");
-        delay(5000);
+        rtcDelay(4);
         valveOFF(valve);
         Serial.println("Valve OFF");
     }

@@ -17,4 +17,7 @@ void ledLightOFF(const int ledLight);
 void valveON(const int valve);
 void valveOFF(const int valve);
 
+void tempControl(const int hotLight, const int fan, const float average, const float max, const float min);
+void humControl(const int valve, const int average, const int max);
+
 #endif

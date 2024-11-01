@@ -48,9 +48,6 @@ float averageDHT = 0;
 float averageLDR = 0;
 float averageSOIL = 0;
 
-//  Flags
-bool threeMeasures = false;
-
 //---------------------------------------------------------------------------------
 // Setup:
 void setup()
@@ -82,11 +79,13 @@ void loop()
   averageDHT = movAverage(measuresDHT, readSensor_DHT);
   Serial.print("Média DHT: ");
   Serial.println(averageDHT);
+  tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP);
 
   float readSensor_SOIL = readSOIL(soilPin);
   averageSOIL = movAverage(measuresSOIL, readSensor_SOIL);
   Serial.print("Média SOIL: ");
   Serial.println(averageSOIL);
+  humControl(valvePin, averageSOIL, HUMIDITY);
 
   Serial.println();
 

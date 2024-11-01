@@ -5,12 +5,14 @@
 #include <RTClib.h>
 #include <WiFi.h>
 #include <time.h>
+#include <LiquidCrystal_I2C.h>
 #include "dhtRead.h"
 #include "ldrRead.h"
 #include "soilRead.h"
 #include "relays.h"
 #include "rtc.h"
 #include "general.h"
+#include "lcdDisplay.h"
 
 // CONSTANTS
 extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
@@ -34,6 +36,7 @@ extern const int soilPin = 35;
 //  External objects
 extern DHT dht;
 extern RTC_DS1307 rtc;
+// extern LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 //  Arrays de armazenamento
 float measuresDHT[10] = {0};
@@ -57,6 +60,7 @@ void setup()
   setupSOIL(soilPin);
   setupDHT();
   setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
+  // setupLCD();
 }
 
 //---------------------------------------------------------------------------------

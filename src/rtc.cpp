@@ -16,11 +16,11 @@ void setupRTC()
             ; // Se o RTC não for encontrado, trava o código
     }
 
-    // if (!rtc.isrunning())
-    // {
-    //     Serial.println("RTC não está funcionando, ajustando para o horário de compilação...");
-    //     rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // Ajusta o RTC para o horário de compilação
-    // }
+    if (!rtc.isrunning())
+    {
+        Serial.println("RTC não está funcionando, ajustando para o horário de compilação...");
+        rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // Ajusta o RTC para o horário de compilação
+    }
 
     // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
     DateTime now = rtc.now();

@@ -2,6 +2,8 @@
 #define relays_h
 
 void setupRelays(const int valve, const int fan, const int ledLight, const int hotLight);
+void tempControl(const int fan, const int hotLight, float averageDHT, const float max, const float min);
+void humControl(const int valve, float averageSOIL, const float min);
 
 void fanON(const int fan);
 void fanOFF(const int fan);

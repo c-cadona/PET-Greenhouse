@@ -59,36 +59,44 @@ void valveOFF(const int valve)
     digitalWrite(valve, HIGH);
 }
 
-void tempControl(const int hotLight, const int fan, const float average, const float max, const float min)
+
+void tempControl(const int fan, const int hotLight, float averageDHT, const float max, const float min)
 {
-    if (average > max)
-    {
-        fanON(fan);
-        hotLightOFF(hotLight);
-        Serial.println("Fan ON - Hot Light OFF");
-    }
-    else if (average < min)
-    {
-        fanOFF(fan);
-        hotLightON(hotLight);
-        Serial.println("Fan OFF - Hot Light ON");
-    }
-    else
+    if (averageDHT < max && averageDHT > min)
     {
         fanOFF(fan);
         hotLightOFF(hotLight);
         Serial.println("Fan OFF - Hot Light OFF");
     }
+    else if (averageDHT > max)
+
+    {
+        fanON(fan);
+        hotLightOFF(hotLight);
+        Serial.println("Fan ON - Hot Light OFF");
+    }
+
+    else if (averageDHT < min)
+    {
+        fanOFF(fan);
+        hotLightON(hotLight);
+        Serial.println("Fan OFF - Hot Light ON");
+    }
 }
 
-void humControl(const int valve, const int average, const int max)
+void humControl(const int valve, float averageSOIL, const float min)
 {
-    if (average < max)
+    if (averageSOIL > min)
+    {
+        valveOFF(valve);
+        Serial.println("Valve OFF");
+    }
+    else if (averageSOIL < min)
     {
         valveON(valve);
-        Serial.println("Válvula ligada");
-        rtcDelay(4);
+        Serial.println("Valve ON");
+        delay(5000);
         valveOFF(valve);
-        Serial.println("Válvula desligada");
+        Serial.println("Valve OFF");
     }
 }

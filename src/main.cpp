@@ -5,14 +5,12 @@
 #include <RTClib.h>
 #include <WiFi.h>
 #include <time.h>
-#include <LiquidCrystal_I2C.h>
 #include "dhtRead.h"
 #include "ldrRead.h"
 #include "soilRead.h"
 #include "relays.h"
 #include "rtc.h"
 #include "general.h"
-#include "lcdDisplay.h"
 
 // CONSTANTS
 extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo

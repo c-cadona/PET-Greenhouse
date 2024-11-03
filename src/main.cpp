@@ -5,12 +5,14 @@
 #include <RTClib.h>
 #include <WiFi.h>
 #include <time.h>
+#include <BluetoothSerial.h>
 #include "dhtRead.h"
 #include "ldrRead.h"
 #include "soilRead.h"
 #include "relays.h"
 #include "rtc.h"
 #include "general.h"
+#include "bluetooth.h"
 
 // CONSTANTS
 extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
@@ -58,6 +60,7 @@ void setup()
   setupSOIL(soilPin);
   setupDHT();
   setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
+  setupBluetooth();
   // setupLCD();
 }
 
@@ -85,7 +88,7 @@ void loop()
   Serial.println(averageSOIL);
   humControl(valvePin, averageSOIL, HUMIDITY);
 
-  Serial.println();
+  sendData(averageDHT, averageLDR, averageSOIL);
 
   rtcDelay(5);
 }

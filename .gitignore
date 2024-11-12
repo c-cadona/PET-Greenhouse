@@ -1,0 +1,28 @@
+# PlatformIO build files
+.pio/
+.vscode/
+
+# C++/PlatformIO specific files
+*.elf
+*.bin
+*.hex
+*.map
+
+# Python cache files
+python-dashboard/__pycache__/
+*.pyc
+*.pyo
+
+# Environment or virtual environment directories
+python-dashboard/env/
+python-dashboard/venv/
+python-dashboard/.venv/
+
+# Log files
+*.log
+
+# Ignore .env files (if any)
+.env
+
+# Configurations for IDEs
+*.code-workspace

@@ -18,8 +18,8 @@
 extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
 extern const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
 extern const int ENOUGH_LIGHT = 600; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
-extern const int DRY = 700;          // Valor lido quando o solo está totalmente seco
-extern const int WET = 370;          // Valor lido quando o solo está submerso na água
+extern const int DRY = 1000;         // Valor lido quando o solo está totalmente seco
+extern const int WET = 3000;         // Valor lido quando o solo está submerso na água
 extern const int HUMIDITY = 0.75 * DRY;
 
 //  Digital Pin's
@@ -71,10 +71,14 @@ void loop()
   DateTime now = rtc.now();
   Serial.println(now.timestamp());
 
-  float readSensor_LDR = readLDR(ldrPins);
-  averageLDR = movAverage(measuresLDR, readSensor_LDR);
-  Serial.print("Média LDR: ");
-  Serial.println(averageLDR);
+  if (isDayTime())
+  {
+    float readSensor_LDR = readLDR(ldrPins);
+    averageLDR = movAverage(measuresLDR, readSensor_LDR);
+    Serial.print("Média LDR: ");
+    Serial.println(averageLDR);
+    lightControl(ledLightPin, averageLDR, ENOUGH_LIGHT);
+  }
 
   float readSensor_DHT = readDHT();
   averageDHT = movAverage(measuresDHT, readSensor_DHT);
@@ -89,6 +93,8 @@ void loop()
   humControl(valvePin, averageSOIL, HUMIDITY);
 
   sendData(averageDHT, averageLDR, averageSOIL);
+
+  Serial.println();
 
   rtcDelay(5);
 }

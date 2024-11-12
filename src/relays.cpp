@@ -92,3 +92,15 @@ void humControl(const int valve, float averageSOIL, const float min)
         Serial.println("Valve OFF");
     }
 }
+
+void lightControl(const int ledLight, const float average, const int enough)
+{
+    if (average > enough)
+    {
+        ledLightON(ledLight);
+    }
+    else
+    {
+        ledLightOFF(ledLight);
+    }
+}

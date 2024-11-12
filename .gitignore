@@ -26,3 +26,4 @@ python-dashboard/.venv/
 
 # Configurations for IDEs
 *.code-workspace
+esp32-firmware/.vscode/extensions.json

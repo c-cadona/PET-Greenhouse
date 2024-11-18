@@ -2,22 +2,17 @@ import random
 import time
 import serial
 
-ser = serial.Serial('COM10', 11250, timeout=5)  # get data from esp32
+
+#A porta COM deve ser mudada de acordo com a porta COM que o computador abre para a comunicação com a ESP via Bluetooth.
+ser = serial.Serial('COM10', 11250, timeout=5)  # recolhe os dados da ESP32
 
 def fetch_data():
-    """
-    Simulates or fetches data from ESP32.
-    Returns a dictionary with time and sensor values.
-    """
+    
     try:
         
         line = ser.readline().decode('utf-8').strip()
-        values = line.split(',') if line else [random.randint(15, 35), random.randint(100, 1000), random.randint(200, 800)]
+        values = line.split(',') if line else [0, 0, 0] #caso não consiga realizar a comunicação, os dados serão 0.
         
-        # For simulated data
-        #values = [random.randint(15, 35), random.randint(100, 1000), random.#randint(200, 800)]
-        
-        # Map the simulated values to named fields
         new_data = {
             "Time": time.strftime('%H:%M:%S'),
             "averageDHT": values[0],

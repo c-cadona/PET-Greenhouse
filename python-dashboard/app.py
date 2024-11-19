@@ -4,29 +4,66 @@ import time
 from data_fetcher import fetch_data
 from plotter import update_charts
 
-# Configuração inicial do Streamlit
-st.set_page_config(page_title="Pet Greenhouse Dashboard", page_icon="🌱", layout="wide")
 
-# Título e descrição do dashboard
-st.title("Dashboard da PET Greenhouse")
-st.write("Visualização em tempo real das variáveis ambientais")
+# Configuração inicial do Streamlit
+st.set_page_config(page_title="Pet Greenhouse", page_icon="🌱", layout="wide")
+
+# Estilo do cabeçalho
+st.markdown("""
+    <style>
+        .main-title {
+            font-size: 40px;
+            font-weight: bold;
+            color: #2E8B57;
+            text-align: center;
+        }
+        .sub-title {
+            font-size: 18px;
+            color: #6C757D;
+            text-align: center;
+            margin-top: -10px;
+        }
+        .metric-box {
+            font-size: 16px;
+            color: #FFFFFF;
+            background-color: #4CAF50;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        hr {
+            border: 1px solid #DDD;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Título e subtítulo
+st.markdown("<div class='main-title'>🌿 Dashboard da Pet Greenhouse 🌿</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub-title'>Monitoramento em tempo real das variáveis ambientais</div>", unsafe_allow_html=True)
 
 # Inicializa o DataFrame para armazenar os dados dos sensores
 if 'data' not in st.session_state:
     st.session_state.data = pd.DataFrame({"Time": [], "averageDHT": [], "averageLDR": [], "averageSOIL": []})
 
-# Espaços reservados para os gráficos
-st.write("Temperatura (°C):")
-temp_chart = st.empty()
-st.write("Luminosidade:")
-light_chart = st.empty()
-st.write("Umidade do Solo (%):")
-soil_chart = st.empty()
+# Divisão em colunas para melhor organização
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("<div class='metric-box'>Temperatura (°C)</div>", unsafe_allow_html=True)
+    temp_chart = st.empty()
+
+with col2:
+    st.markdown("<div class='metric-box'>Luminosidade</div>", unsafe_allow_html=True)
+    light_chart = st.empty()
+
+with col3:
+    st.markdown("<div class='metric-box'>Umidade do Solo (%)</div>", unsafe_allow_html=True)
+    soil_chart = st.empty()
 
 # Configuração do intervalo de atualização
-REFRESH_INTERVAL = 5  # Intervalo em segundos para atualizar os gráficos
+REFRESH_INTERVAL = 5  # Segundos
 
-# Loop contínuo para atualização dos gráficos
+# Atualizações contínuas
 while True:
     # Busca novos dados dos sensores
     novos_dados = fetch_data()

@@ -74,10 +74,13 @@ void loop()
   Serial.println(averageLDR);
 
   float readSensor_DHT = readDHT();
-  averageDHT = movAverage(measuresDHT, readSensor_DHT);
-  Serial.print("Média DHT: ");
-  Serial.println(averageDHT);
-  tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP);
+  if (readSensor_DHT != -1)
+  {
+    averageDHT = movAverage(measuresDHT, readSensor_DHT);
+    Serial.print("Média DHT: ");
+    Serial.println(averageDHT);
+    tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP);
+  }
 
   float readSensor_SOIL = readSOIL(soilPin);
   averageSOIL = movAverage(measuresSOIL, readSensor_SOIL);

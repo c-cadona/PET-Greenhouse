@@ -18,6 +18,9 @@ python-dashboard/env/
 python-dashboard/venv/
 python-dashboard/.venv/
 
+#Arquivo de testes para python:
+python-dashboard/test.py 
+
 # Log files
 *.log
 

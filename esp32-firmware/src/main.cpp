@@ -1,12 +1,13 @@
 //  Pages includes
 #include <Arduino.h>
 #include <DHT.h>
+#include <Adafruit_Sensor.h>
+#include <DHT_U.h>
 #include <Wire.h>
 #include <RTClib.h>
 #include <WiFi.h>
 #include <time.h>
 #include <BluetoothSerial.h>
-#include "dhtRead.h"
 #include "ldrRead.h"
 #include "soilRead.h"
 #include "relays.h"
@@ -15,7 +16,7 @@
 #include "bluetooth.h"
 
 // CONSTANTS
-extern const float MAX_TEMP = 22.0;  // Valor a ser definido pelo botão externo
+extern const float MAX_TEMP = 24.0;  // Valor a ser definido pelo botão externo
 extern const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
 extern const int ENOUGH_LIGHT = 600; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
 extern const int DRY = 1000;         // Valor lido quando o solo está totalmente seco
@@ -25,7 +26,7 @@ extern const int HUMIDITY = 0.75 * DRY;
 //  Digital Pin's
 extern const int hotLightPin = 12;
 extern const int ledLightPin = 14;
-extern const int dhtPin = 27;
+#define DHTPIN 4
 extern const int fanPin = 26;
 extern const int valvePin = 25;
 
@@ -34,9 +35,10 @@ extern const int ldrPins[2] = {33, 32};
 extern const int soilPin = 35;
 
 //  External objects
-extern DHT dht;
+#define DHTTYPE DHT11
+DHT_Unified dht(DHTPIN, DHTTYPE);
+
 extern RTC_DS1307 rtc;
-// extern LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 //  Arrays de armazenamento
 float measuresDHT[10] = {0};
@@ -52,22 +54,35 @@ float averageSOIL = 0;
 // Setup:
 void setup()
 {
-  Serial.begin(921600);
+  Serial.begin(115200);
   Wire.begin();
+
+  setupBluetooth();
 
   setupRTC();
   setupLDR(ldrPins);
   setupSOIL(soilPin);
-  setupDHT();
+
+  //  Setup DHT
+  dht.begin();
+
+  sensor_t sensor;
+  dht.temperature().getSensor(&sensor);
+  Serial.print(sensor.name);
+  Serial.println(F("Detectado"));
+
   setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
-  setupBluetooth();
-  // setupLCD();
+
+  //  Pula 1 linha apenas
+  Serial.println();
 }
 
 //---------------------------------------------------------------------------------
 // Loop:
 void loop()
 {
+  Serial.println();
+
   DateTime now = rtc.now();
   Serial.println(now.timestamp());
 
@@ -80,13 +95,20 @@ void loop()
     lightControl(ledLightPin, averageLDR, ENOUGH_LIGHT);
   }
 
-  float readSensor_DHT = readDHT();
-  if (readSensor_DHT != -1)
+  sensors_event_t event;
+  dht.temperature().getEvent(&event);
+
+  if (!isnan(event.temperature))
   {
-    averageDHT = movAverage(measuresDHT, readSensor_DHT);
+    float readSensor_DHT = event.temperature;             // Armazena a leitura da temperatura
+    averageDHT = movAverage(measuresDHT, readSensor_DHT); // Calcula a média móvel
     Serial.print("Média DHT: ");
     Serial.println(averageDHT);
-    tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP);
+    tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP); // Controle de temperatura
+  }
+  else
+  {
+    Serial.println(F("Erro no DHT"));
   }
 
   float readSensor_SOIL = readSOIL(soilPin);
@@ -99,5 +121,5 @@ void loop()
 
   Serial.println();
 
-  rtcDelay(5);
+  rtcDelay(10);
 }

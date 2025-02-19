@@ -26,6 +26,6 @@ void sendData(float dhtData, float lightData, float soilData)
     }
     else
     {
-        Serial.println("Aguardando conexão");
+        Serial.print("Aguardando conexão");
     }
 }

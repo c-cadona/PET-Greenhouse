@@ -1,7 +1,7 @@
 //  Pages includes
 #include <Arduino.h>
-#include <DHT.h>
 #include <Adafruit_Sensor.h>
+#include <DHT.h>
 #include <DHT_U.h>
 #include <Wire.h>
 #include <RTClib.h>
@@ -103,7 +103,8 @@ void loop()
     float readSensor_DHT = event.temperature;             // Armazena a leitura da temperatura
     averageDHT = movAverage(measuresDHT, readSensor_DHT); // Calcula a média móvel
     Serial.print("Média DHT: ");
-    Serial.println(averageDHT);
+    Serial.print(averageDHT);
+    Serial.println("°C");
     tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP); // Controle de temperatura
   }
   else

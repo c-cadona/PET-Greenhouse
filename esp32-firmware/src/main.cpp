@@ -16,12 +16,12 @@
 #include "bluetooth.h"
 
 // CONSTANTS
-extern const float MAX_TEMP = 24.0;  // Valor a ser definido pelo botão externo
-extern const float MIN_TEMP = 18.0;  // Valor a ser definido pelo botão externo
-extern const int ENOUGH_LIGHT = 600; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
-extern const int DRY = 1000;         // Valor lido quando o solo está totalmente seco
-extern const int WET = 3000;         // Valor lido quando o solo está submerso na água
-extern const int HUMIDITY = 0.75 * DRY;
+extern const float MAX_TEMP = 24.0;   // Valor a ser definido pelo botão externo
+extern const float MIN_TEMP = 18.0;   // Valor a ser definido pelo botão externo
+extern const int ENOUGH_LIGHT = 1200; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
+extern const int DRY = 3000;          // Valor lido quando o solo está totalmente seco
+extern const int WET = 1700;          // Valor lido quando o solo está submerso na água
+extern const int HUMIDITY = (1.25 * WET);
 
 //  Digital Pin's
 extern const int hotLightPin = 12;
@@ -122,5 +122,5 @@ void loop()
 
   Serial.println();
 
-  rtcDelay(10);
+  rtcDelay(5);
 }

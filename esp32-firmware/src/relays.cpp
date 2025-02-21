@@ -10,6 +10,11 @@ void setupRelays(const int valve, const int fan, const int ledLight, const int h
     pinMode(fan, OUTPUT);
     pinMode(ledLight, OUTPUT);
     pinMode(hotLight, OUTPUT);
+
+    digitalWrite(valve, HIGH);
+    digitalWrite(fan, HIGH);
+    digitalWrite(ledLight, HIGH);
+    digitalWrite(hotLight, HIGH);
 }
 
 //  Função responsável por ligar a FAN

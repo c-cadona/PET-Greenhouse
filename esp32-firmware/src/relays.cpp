@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "relays.h"
-#include "dhtRead.h"
 #include "rtc.h"
 
 //  Função que inicia os relés
@@ -10,7 +9,6 @@ void setupRelays(const int valve, const int fan, const int ledLight, const int h
     pinMode(fan, OUTPUT);
     pinMode(ledLight, OUTPUT);
     pinMode(hotLight, OUTPUT);
-
     digitalWrite(valve, HIGH);
     digitalWrite(fan, HIGH);
     digitalWrite(ledLight, HIGH);

@@ -1,9 +1,8 @@
 //  Pages includes
 #include <Arduino.h>
-#include <Adafruit_Sensor.h>
-#include <DHT.h>
-#include <DHT_U.h>
 #include <Wire.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include <RTClib.h>
 #include <WiFi.h>
 #include <time.h>
@@ -26,7 +25,6 @@ extern const int HUMIDITY = (1.25 * WET);
 //  Digital Pin's
 extern const int hotLightPin = 12;
 extern const int ledLightPin = 14;
-#define DHTPIN 4
 extern const int fanPin = 26;
 extern const int valvePin = 25;
 
@@ -34,9 +32,10 @@ extern const int valvePin = 25;
 extern const int ldrPins[2] = {33, 32};
 extern const int soilPin = 35;
 
-//  External objects
-#define DHTTYPE DHT11
-DHT_Unified dht(DHTPIN, DHTTYPE);
+// temp sensor:
+#define ONE_WIRE_BUS 4
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
 
 extern RTC_DS1307 rtc;
 
@@ -63,17 +62,12 @@ void setup()
   setupLDR(ldrPins);
   setupSOIL(soilPin);
 
-  //  Setup DHT
-  dht.begin();
-
-  sensor_t sensor;
-  dht.temperature().getSensor(&sensor);
-  Serial.print(sensor.name);
-  Serial.println(F("Detectado"));
+  // Inicializa o DS18B20
+  sensors.begin();
 
   setupRelays(valvePin, fanPin, ledLightPin, hotLightPin);
 
-  //  Pula 1 linha apenas
+  // Pula 1 linha apenas
   Serial.println();
 }
 
@@ -95,21 +89,21 @@ void loop()
     lightControl(ledLightPin, averageLDR, ENOUGH_LIGHT);
   }
 
-  sensors_event_t event;
-  dht.temperature().getEvent(&event);
+  // Leitura do DS18B20
+  sensors.requestTemperatures();                         // Solicita a leitura da temperatura
+  float readSensor_DS18B20 = sensors.getTempCByIndex(0); // Lê a temperatura em Celsius
 
-  if (!isnan(event.temperature))
+  if (readSensor_DS18B20 != DEVICE_DISCONNECTED_C)
   {
-    float readSensor_DHT = event.temperature;             // Armazena a leitura da temperatura
-    averageDHT = movAverage(measuresDHT, readSensor_DHT); // Calcula a média móvel
-    Serial.print("Média DHT: ");
+    averageDHT = movAverage(measuresDHT, readSensor_DS18B20); // Calcula a média móvel
+    Serial.print("Média DS18B20: ");
     Serial.print(averageDHT);
     Serial.println("°C");
     tempControl(hotLightPin, fanPin, averageDHT, MAX_TEMP, MIN_TEMP); // Controle de temperatura
   }
   else
   {
-    Serial.println(F("Erro no DHT"));
+    Serial.println(F("Erro no DS18B20"));
   }
 
   float readSensor_SOIL = readSOIL(soilPin);
@@ -119,7 +113,6 @@ void loop()
   humControl(valvePin, averageSOIL, HUMIDITY);
 
   sendData(averageDHT, averageLDR, averageSOIL);
-
   Serial.println();
 
   rtcDelay(5);

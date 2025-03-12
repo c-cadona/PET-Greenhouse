@@ -4,9 +4,8 @@ import time
 from data_fetcher import fetch_data
 from plotter import update_charts
 
-
 # Configuração inicial do Streamlit
-st.set_page_config(page_title="Pet Greenhouse", page_icon="🌱", layout="wide")
+st.set_page_config(page_title="Pet Greenhouse", page_icon="⚡", layout="wide")
 
 # Estilo do cabeçalho
 st.markdown("""
@@ -38,7 +37,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Título e subtítulo
-st.markdown("<div class='main-title'>🌿 Dashboard da Pet Greenhouse 🌿</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'>⚡Dashboard da Pet Greenhouse⚡</div>", unsafe_allow_html=True)
 st.markdown("<div class='sub-title'>Monitoramento em tempo real das variáveis ambientais</div>", unsafe_allow_html=True)
 
 # Inicializa o DataFrame para armazenar os dados dos sensores

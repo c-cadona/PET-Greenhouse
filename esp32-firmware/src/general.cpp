@@ -24,7 +24,7 @@ float movAverage(float values[], float measure)
     }
 
     // Quando o array estiver cheio, mova todos os valores
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 9; i++)
     {
         values[i] = values[i + 1];
     }

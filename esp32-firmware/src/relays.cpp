@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "relays.h"
-#include "rtc.h"
 
 //  Função que inicia os relés
 void setupRelays(const int valve, const int fan, const int ledLight, const int hotLight)
@@ -64,55 +63,4 @@ void valveON(const int valve)
 void valveOFF(const int valve)
 {
     digitalWrite(valve, HIGH);
-}
-
-void tempControl(const int hotLight, const int fan, const float average, const float max, const float min)
-{
-    if (average > max)
-    {
-        fanON(fan);
-        hotLightOFF(hotLight);
-    }
-
-    else if (average < min)
-    {
-        fanOFF(fan);
-        hotLightON(hotLight);
-    }
-    else
-    {
-        fanOFF(fan);
-        hotLightOFF(hotLight);
-    }
-}
-
-void humControl(const int valve, float averageSOIL, const float min)
-{
-    if (averageSOIL < min)
-    {
-        valveOFF(valve);
-        Serial.println("Valve OFF");
-    }
-    else if (averageSOIL > min)
-    {
-        valveON(valve);
-        Serial.println("Valve ON");
-        delay(5000);
-        valveOFF(valve);
-        Serial.println("Valve OFF");
-    }
-}
-
-void lightControl(const int ledLight, const float average, const int enough)
-{
-    if (average > enough)
-    {
-        ledLightON(ledLight);
-        Serial.println("Led ON");
-    }
-    else
-    {
-        ledLightOFF(ledLight);
-        Serial.println("Led OFF");
-    }
 }

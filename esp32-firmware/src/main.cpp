@@ -3,7 +3,6 @@
 #include <Wire.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#include <WiFi.h>
 #include <time.h>
 #include <BluetoothSerial.h>
 #include "ldrRead.h"
@@ -63,7 +62,7 @@ void setup()
 
 // Controle de tempo sem RTC
 unsigned long lastLoopTime = 0;          // Armazena o tempo da última execução
-const unsigned long loopInterval = 5000; // Intervalo de 5 segundos
+const unsigned long loopInterval = 3000; // Intervalo de 5 segundos
 
 void loop()
 {

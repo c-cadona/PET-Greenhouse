@@ -31,30 +31,28 @@ void tempControl(const int hotLight, const int fan, const float average, const f
 // Controle de umidade do solo
 void humControl(const int valve, float averageSOIL, const float min, const float max)
 {
-    static unsigned long valveStartTime = 0;  // Tempo em que a válvula foi ligada
-    const unsigned long valveDuration = 3000; // Tempo que a válvula fica ligada (3 segundos)
-    static bool valveState = false;           // Armazena o estado atual da válvula
+    static bool valveState = false; // Estado atual da válvula
 
+    // Caso 1: Solo está muito seco, liga a válvula
     if (averageSOIL > max && !valveState)
     {
-        valveON(valve); // Liga a válvula
-        valveState = true;
-        valveStartTime = millis(); // Marca o tempo em que a válvula foi ligada
+        valveON(valve);    // Liga a válvula
+        valveState = true; // Atualiza o estado da válvula
         Serial.println("Valve ON");
     }
+    // Caso 2: Solo está suficientemente úmido, desliga a válvula
     else if (averageSOIL < min && valveState)
     {
-        valveOFF(valve); // Desliga a válvula
-        valveState = false;
-        valveStartTime = 0; // Reseta o tempo
+        valveOFF(valve);    // Desliga a válvula
+        valveState = false; // Atualiza o estado da válvula
         Serial.println("Valve OFF");
     }
-    else if (valveState && (millis() - valveStartTime >= valveDuration)) // Se passaram 3 segundos
+    // Caso 3: Solo está na faixa ideal, desliga a válvula
+    else if (valveState && averageSOIL >= min && averageSOIL <= max)
     {
-        valveOFF(valve); // Desliga a válvula
-        valveState = false;
-        valveStartTime = 0; // Reseta o tempo
-        Serial.println("Valve OFF");
+        valveOFF(valve);    // Desliga a válvula
+        valveState = false; // Atualiza o estado da válvula
+        Serial.println("Valve OFF - Soil in optimal range");
     }
 }
 

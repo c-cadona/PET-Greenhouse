@@ -14,8 +14,8 @@ def update_charts(df: pd.DataFrame, temp_chart, light_chart, soil_chart):
         soil_min, soil_max = df["averageSOIL"].min(), df["averageSOIL"].max()
 
         # Adiciona margens para centralizar as linhas
-        temp_range = [min(temp_min - 5, 18), max(temp_max + 5, 22)]
-        light_range = [min(light_min - 50, 600), light_max + 50]
+        temp_range = [min(temp_min - 5, 15), max(temp_max + 5, 27)]
+        light_range = [min(light_min - 100, 1000), max(light_max + 100, 1300)]
         soil_range = [min(soil_min - 10, 80), soil_max + 10]
 
         # Gráfico de temperatura com linhas de referência
@@ -24,16 +24,16 @@ def update_charts(df: pd.DataFrame, temp_chart, light_chart, soil_chart):
         temp_fig.add_shape(
             type="line",
             x0=df["Time"].iloc[0], x1=df["Time"].iloc[-1],
-            y0=22, y1=22,
+            y0=25, y1=25,
             line=dict(color="red", width=2, dash="dash"),
-            name="Máxima (22°C)"
+            name="Máxima (25°C)"
         )
         temp_fig.add_shape(
             type="line",
             x0=df["Time"].iloc[0], x1=df["Time"].iloc[-1],
-            y0=18, y1=18,
+            y0=17, y1=17,
             line=dict(color="blue", width=2, dash="dash"),
-            name="Mínima (18°C)"
+            name="Mínima (17°C)"
         )
         temp_fig.update_layout(
             title="Temperatura (°C)",
@@ -54,9 +54,9 @@ def update_charts(df: pd.DataFrame, temp_chart, light_chart, soil_chart):
         light_fig.add_shape(
             type="line",
             x0=df["Time"].iloc[0], x1=df["Time"].iloc[-1],
-            y0=600, y1=600,
+            y0=1200, y1=1200,
             line=dict(color="yellow", width=2, dash="dash"),
-            name="Mínima (600)"
+            name="Mínima (1200)"
         )
         light_fig.update_layout(
             title="Luminosidade",

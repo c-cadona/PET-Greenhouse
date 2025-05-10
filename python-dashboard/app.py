@@ -37,7 +37,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Título e subtítulo
-st.markdown("<div class='main-title'>⚡Dashboard da Pet Greenhouse⚡</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'>⚡Pet Greenhouse Dashboard⚡</div>", unsafe_allow_html=True)
 st.markdown("<div class='sub-title'>Monitoramento em tempo real das variáveis ambientais</div>", unsafe_allow_html=True)
 
 # Inicializa o DataFrame para armazenar os dados dos sensores
@@ -56,7 +56,7 @@ with col2:
     light_chart = st.empty()
 
 with col3:
-    st.markdown("<div class='metric-box'>Umidade do Solo (%)</div>", unsafe_allow_html=True)
+    st.markdown("<div class='metric-box'>Umidade do Solo </div>", unsafe_allow_html=True)
     soil_chart = st.empty()
 
 # Configuração do intervalo de atualização

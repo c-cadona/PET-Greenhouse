@@ -14,11 +14,11 @@
 
 // CONSTANTS
 extern const float MAX_TEMP = 24.0;
-extern const float MIN_TEMP = 18.0;
+extern const float MIN_TEMP = 16.0;
 extern const int ENOUGH_LIGHT = 1200; // Valor de luminosidade suficiente (Quanto menor o número, mais luminoso)
 extern const int DRY = 3000;          // Valor lido quando o solo está totalmente seco
-extern const int WET = 1700;          // Valor lido quando o solo está submerso na água
-
+extern const int WET = 2000;          // Valor lido quando o solo está submerso na água
+  
 //  Digital Pin's
 extern const int hotLightPin = 12;
 extern const int ledLightPin = 14;
@@ -30,7 +30,7 @@ extern const int ldrPins[2] = {33, 32};
 extern const int soilPin = 35;
 
 // temp sensor:
-#define ONE_WIRE_BUS 4
+#define ONE_WIRE_BUS 2
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
@@ -71,8 +71,6 @@ void loop()
   {
     lastLoopTime = millis(); // Atualiza o tempo da última execução
 
-    Serial.println();
-
     // Leitura do sensor LDR
     float readSensor_LDR = readLDR(ldrPins);
     averageLDR = movAverage(measuresLDR, readSensor_LDR);
@@ -108,11 +106,12 @@ void loop()
     Serial.println(averageSOIL);
 
     // Controle de umidade do solo
-    humControl(valvePin, averageSOIL, DRY, WET);
+    humControl(valvePin, averageSOIL, WET, DRY);
 
     // Envia dados via Bluetooth
     sendData(averageTemp, averageLDR, averageSOIL);
 
+    Serial.println();
     Serial.println();
   }
 }
